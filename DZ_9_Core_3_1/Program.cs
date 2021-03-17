@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Reflection;
 
 namespace DZ_9_Core_3_1
 {
@@ -8,26 +9,33 @@ namespace DZ_9_Core_3_1
      //в настройках приложения (application-scope). Запросить у пользователя имя, возраст и
      //род деятельности, а затем сохранить данные в настройках. При следующем запуске отобразить
      //эти сведения. Задать приложению версию и описание.
+        
         static void Main(string[] args)
         {
-            //Create the object
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            //make changes
-           // config.AppSettings.Settings["Key2"].Value = "ddd";
 
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
-            var sAll = ConfigurationManager.AppSettings;
-
-            foreach (string s in sAll.AllKeys)
-            { 
-            Console.WriteLine("Key: " + s + " Value: " + sAll.Get(s));
+            var a = typeof(string).Assembly.GetName().Version;
+            do
+            {
+                Config.GreetengUser();
+                Console.WriteLine("1 - Сменить данные");
+                Console.WriteLine("2 - Выйти из программы");
+                AssemblyVersion();
             }
-            Console.ReadLine();
+            while (Config.Next());
 
-            //save to apply changes
-            
+
+
+
+            void AssemblyVersion()
+            {
+                Console.SetCursorPosition(0, 26);
+                Console.WriteLine($"Версия сборки {assemblyVersion}");
+                Console.SetCursorPosition(0, 3);
+            }
+
+
 
 
         }

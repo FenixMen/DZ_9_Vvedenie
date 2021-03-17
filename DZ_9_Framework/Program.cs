@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace DZ_9_Framework
 {
@@ -13,6 +10,9 @@ namespace DZ_9_Framework
      //эти сведения. Задать приложению версию и описание.
         static void Main(string[] args)
         {
+            string assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+
             do
             {
                 if (CheckUserValue()) GreetingUser();
@@ -20,6 +20,7 @@ namespace DZ_9_Framework
 
                 Console.WriteLine("1 - Изменить свои данные");
                 Console.WriteLine("2 - Выйти из программы");
+                AssemblyVersion();
             }
             while (Next());
 
@@ -37,7 +38,15 @@ namespace DZ_9_Framework
                 {
                     return false;
                 }
+                Console.Clear();
                 return true;
+            }
+
+            void AssemblyVersion()
+            {
+                Console.SetCursorPosition(0, 26);
+                Console.WriteLine($"Версия сборки {assemblyVersion}");
+                Console.SetCursorPosition(0, 3);
             }
             void GreetingUser() => Console.WriteLine($"Полльзователь: {GetUserName()}, {GetUserAge()} лет, место работы: {GetUserWork()}\n");
             bool CheckUserValue()
